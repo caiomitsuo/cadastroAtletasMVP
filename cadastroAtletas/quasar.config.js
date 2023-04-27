@@ -58,7 +58,11 @@ module.exports = configure(function (/* ctx */) {
         node: 'node16'
       },
 
-      vueRouterMode: 'history' // available values: 'hash', 'history'
+      vueRouterMode: 'history',
+      env:{
+        SUPABASE_URL: 'https://ekmywryltyxcqmdynglv.supabase.co',
+        SUPABASE_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVrbXl3cnlsdHl4Y3FtZHluZ2x2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODI1NjA1NzMsImV4cCI6MTk5ODEzNjU3M30.LSFAsFqU6F1ItgsfnMHRZuqjbIYnAChNq1aMrFLBnkE'
+      }, // available values: 'hash', 'history'
       // vueRouterBase,
       // vueDevtools,
       // vueOptionsAPI: false,
@@ -105,7 +109,9 @@ module.exports = configure(function (/* ctx */) {
           warning: '#F2C037'
         }
       },
-      plugins: []
+      plugins: [
+        'Dialog'
+      ]
     },
 
     // animations: 'all', // --- includes all animations

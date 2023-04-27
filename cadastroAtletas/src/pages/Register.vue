@@ -7,8 +7,9 @@
           <q-input label="Name" outlined v-model="form.name" />
           <q-input label="Email" outlined v-model="form.email" />
           <q-input label="Password" outlined v-model="form.password" />
-          <div class="full-width q-pt-md">
+          <div class="full-width q-pt-md q-gutter-y-sm">
             <q-btn label="Cadastrar" color="primary" class="full-width" outlined rounded size="lg" type="submit" />
+            <q-btn label="Voltar" color="dark" class="full-width" outlined rounded size="lg" :to="{ name: 'login' }" />
           </div>
         </div>
       </q-form>

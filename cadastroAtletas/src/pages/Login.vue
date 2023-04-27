@@ -12,6 +12,10 @@
           <div class="full-width q-pt-md">
             <q-btn label="Cadastro" color="primary" class="full-width" outlined rounded size="lg" to="/register" />
           </div>
+          <div class="full-width q-pt-md">
+            <q-btn label="Esqueceu a Senha?" color="primary" class="full-width" outlined rounded size="lg"
+              :to="{ name: 'forgot-password' }" />
+          </div>
         </div>
       </q-form>
     </p>
@@ -19,7 +23,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, onMounted } from 'vue'
 import useAuthUser from 'src/composables/UseAuthUser'
 import { useRouter } from 'vue-router'
 
@@ -27,16 +31,23 @@ export default defineComponent({
   name: 'PageLogin',
   setup() {
     const router = useRouter()
-    const { login } = useAuthUser()
+    const { login, isLoggedIn } = useAuthUser()
     const form = ref({
       email: '',
       password: ''
+    })
+
+    onMounted(() => {
+      if (isLoggedIn) {
+        router.push({ name: 'me' })
+      }
     })
 
     const handleLogin = async () => {
       try {
         await login(form.value)
         router.push({ name: 'me' })
+        console.log('cliqei')
       } catch (error) {
         alert(error.message)
       }
