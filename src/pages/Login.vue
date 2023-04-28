@@ -26,7 +26,7 @@
 import { defineComponent, ref, onMounted } from 'vue'
 import useAuthUser from 'src/composables/UseAuthUser'
 import { useRouter } from 'vue-router'
-
+import useNotify from 'src/composables/UseNotify'
 export default defineComponent({
   name: 'PageLogin',
   setup() {
@@ -36,7 +36,7 @@ export default defineComponent({
       email: '',
       password: ''
     })
-
+    const { notifyError, notifySuccess } = useNotify()
     onMounted(() => {
       if (isLoggedIn) {
         router.push({ name: 'me' })
@@ -46,10 +46,11 @@ export default defineComponent({
     const handleLogin = async () => {
       try {
         await login(form.value)
+        notifySuccess('Login realizado com sucesso!')
         router.push({ name: 'me' })
         console.log('cliqei')
       } catch (error) {
-        alert(error.message)
+        notifyError(error.message)
       }
     }
     return {
