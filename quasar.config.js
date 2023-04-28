@@ -110,7 +110,8 @@ module.exports = configure(function (/* ctx */) {
         }
       },
       plugins: [
-        'Dialog'
+        'Dialog',
+        'Notify'
       ]
     },
 
