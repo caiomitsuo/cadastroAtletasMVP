@@ -4,8 +4,21 @@
       <q-form class="row justify-center" @submit.prevent="handleLogin">
         <p class="col-12 text-h6 text-center">Login</p>
         <div class="col-md4 col-sm-6 col-xs-10 q-gutter-y-md">
-          <q-input label="Email" outlined v-model="form.email" />
-          <q-input label="Password" outlined v-model="form.password" />
+          <q-input
+            label="Email"
+            outlined
+            v-model="form.email"
+            lazy-rules
+            :rules="[val => (val && val.length > 0) || 'Ops! Parece que falta algo.Email requerido']"
+            type="Email"
+            />
+          <q-input
+            label="Password"
+            outlined
+            v-model="form.password"
+            lazy-rules
+            :rules="[val => (val && val.length > 0) || 'Ops! Parece que falta algo.Senha requerida']"
+          />
           <div class="full-width q-pt-md">
             <q-btn label="Login" color="primary" class="full-width" outlined rounded size="lg" type="submit" />
           </div>
