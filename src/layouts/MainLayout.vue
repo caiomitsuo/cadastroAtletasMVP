@@ -53,7 +53,7 @@ const linksList = [
     title: 'Atletas',
     caption: '',
     icon: 'mdi-account',
-    routeName: 'me'
+    routeName: 'category'
   }
 ]
 
