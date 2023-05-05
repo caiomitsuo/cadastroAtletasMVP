@@ -9,7 +9,7 @@
       <q-form class="col-md-7 col-xs-12 col-sm-12 q-gutter-y-md" @submit.prevent="handleSubmit">
         <q-input label="Name" v-model="form.name"
           :rules="[val => (val && val.length > 0) || 'Ops! Parece que falta algo.Nome requerido']" />
-        <q-btn label="Salvar" color="primary" class="full-width" rounded type="submit" />
+        <q-btn :label="isUpdate ? 'Atualizar' : 'Salvar' " color="primary" class="full-width" rounded type="submit" />
         <q-btn label="Cancelar" color="primary" class="full-width" rounded :to="{ name: 'category' }" />
       </q-form>
     </div>
@@ -28,7 +28,7 @@ export default defineComponent({
     const table = 'category'
     const router = useRouter()
     const route = useRoute()
-    const { post, getById } = userApi()
+    const { post, getById, update } = userApi()
     const { notifyError, notifySuccess } = useNotify()
     const isUpdate = computed(() => route.params.id)
     let category = {}
@@ -38,22 +38,28 @@ export default defineComponent({
 
     onMounted(() => {
       if (isUpdate.value) {
-        alert('update')
+        handleGetCategory(isUpdate.value)
       }
     })
     const handleSubmit = async () => {
       try {
-        await post(table, form.value)
-        notifySuccess('Categoria cadastrada com sucesso!')
+        if (isUpdate.value) {
+          await update(table, form.value)
+          notifySuccess('Categoria atualizada com sucesso!')
+        } else {
+          await post(table, form.value)
+          notifySuccess('Categoria cadastrada com sucesso!')
+          router.push({ name: 'category' })
+        }
         router.push({ name: 'category' })
       } catch (error) {
         notifyError(error.message)
       }
     }
 
-    const handleGetCategory = (id) => {
+    const handleGetCategory = async (id) => {
       try {
-        category = getById(table, id)
+        category = await getById(table, id)
         form.value = category
       } catch (error) {
 
@@ -62,7 +68,7 @@ export default defineComponent({
     return {
       form,
       handleSubmit,
-      handleGetCategory
+      isUpdate
     }
   }
 })

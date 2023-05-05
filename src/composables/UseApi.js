@@ -44,11 +44,11 @@ export default function userApi() {
     if (error) throw error
     return data
   }
-  const remove = async (table, form) => {
+  const remove = async (table, id) => {
     const { data, error } = await supabase
       .from(table)
       .delete()
-      .match({ id: form.id })
+      .match({ id })
     if (error) throw error
     return data
   }
