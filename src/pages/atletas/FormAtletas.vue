@@ -66,7 +66,7 @@ export default defineComponent({
       }
     }
 
-    const handleGetCate = async (id) => {
+    const handleGetCategory = async (id) => {
       try {
         category = await getById(table, id)
         form.value = category
