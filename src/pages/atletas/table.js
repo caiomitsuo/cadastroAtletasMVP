@@ -3,7 +3,7 @@ const columnsAtletas = [
   { name: 'name', align: 'left', label: 'Nome', field: 'name', sortable: true },
   { name: 'cpf', align: 'left', label: 'CPF', field: 'cpf', sortable: true },
   { name: 'rg', align: 'left', label: 'RG', field: 'rg', sortable: true },
-  { name: 'data_nascimento', align: 'left', label: 'Data de Nascimento', field: 'data_nascimentog', sortable: false },
+  { name: 'data_nascimento', align: 'left', label: 'Data de Nascimento', field: 'data_nascimento', sortable: false },
   { name: 'actions', align: 'right', label: 'Ação', field: 'actions', sortable: false }
 ]
 

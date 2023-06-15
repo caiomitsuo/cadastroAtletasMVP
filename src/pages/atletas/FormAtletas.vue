@@ -11,11 +11,14 @@
           :rules="[val => (val && val.length > 0) || 'Ops! Parece que falta algo.Nome requerido']" />
           <q-input label="Rg" v-model="form.rg"/>
           <q-input label="Cpf" v-model="form.cpf"/>
-          <q-select v-model="form.category.id"
+          <q-input v-model="form.data_nascimento" :mask="mask" @input="updateDate" label="Data de Nascimento"/>
+          <q-select v-model="form.category_id"
           :options="optionsCategory"
-          label="Category"
+          label="Categoria"
           option-value="id"
-          option-label="name"/>
+          option-label="name"
+          map-options
+          emit-value/>
         <q-btn :label="isUpdate ? 'Atualizar' : 'Salvar' " color="primary" class="full-width" rounded type="submit" />
         <q-btn label="Cancelar" color="primary" class="full-width" rounded :to="{ name: 'atletas' }" />
       </q-form>
@@ -35,30 +38,38 @@ export default defineComponent({
     const table = 'atletas'
     const router = useRouter()
     const route = useRoute()
-    const { post, getById, update } = userApi()
+    const { post, getById, update, list } = userApi()
     const { notifyError, notifySuccess } = useNotify()
     const isUpdate = computed(() => route.params.id)
-    let category = {}
+    let atletas = {}
+    const optionsCategory = ref([])
     const form = ref({
       name: '',
       rg: '',
-      cpf: ''
+      cpf: '',
+      data_nascimento: '',
+      category_id: '',
+      img_url: ''
     })
 
     onMounted(() => {
+      handleGetListCategories()
       if (isUpdate.value) {
-        handleGetCategory(isUpdate.value)
+        handleGetAtletas(isUpdate.value)
       }
     })
+
+    const handleGetListCategories = async () => {
+      optionsCategory.value = await list('category')
+    }
     const handleSubmit = async () => {
       try {
         if (isUpdate.value) {
           await update(table, form.value)
-          notifySuccess('Categoria atualizada com sucesso!')
+          notifySuccess('Atleta atualizada com sucesso!')
         } else {
           await post(table, form.value)
-          notifySuccess('Categoria cadastrada com sucesso!')
-          router.push({ name: 'category' })
+          notifySuccess('Atleta cadastrada com sucesso!')
         }
         router.push({ name: 'atletas' })
       } catch (error) {
@@ -66,10 +77,10 @@ export default defineComponent({
       }
     }
 
-    const handleGetCategory = async (id) => {
+    const handleGetAtletas = async (id) => {
       try {
-        category = await getById(table, id)
-        form.value = category
+        atletas = await getById(table, id)
+        form.value = atletas
       } catch (error) {
 
       }
@@ -77,7 +88,9 @@ export default defineComponent({
     return {
       form,
       handleSubmit,
-      isUpdate
+      isUpdate,
+      optionsCategory,
+      mask: '####/##/##'
     }
   }
 })
