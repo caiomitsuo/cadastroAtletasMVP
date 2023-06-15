@@ -1,13 +1,18 @@
 <template>
   <q-page padding>
     <div class="row">
-      <q-table title="Atletas" :rows="categories" :columns="columnsCategory" row-key="id" class="col-12" :loading="loading">
+      <q-table title="Atletas" :rows="atletas" :columns="columnsAtletas" row-key="id" class="col-12" :loading="loading">
         <template v-slot:top>
           <span class="text-h6">
-            Categorias dos Atletas
+            Atletas
           </span>
           <q-space />
-          <q-btn color="primary" label="Nova Categoria" icon="mdi-plus" :to="{ name: 'form-category' }" />
+          <q-btn color="primary" label="Novo Atleta" icon="mdi-plus" :to="{ name: 'form-atletas' }" />
+        </template>
+        <template v-slot:body-cell-img_url="props">
+          <q-td :props="props">
+            <q-avatar :src="props.row.img_url" />
+          </q-td>
         </template>
         <template v-slot:body-cell-actions="props">
           <q-td :props="props" class="q-gutter-x-sm">
@@ -16,7 +21,7 @@
                 Editar
               </q-tooltip>
             </q-btn>
-            <q-btn icon="mdi-delete-outline" color="negative" dense size="sm" @click="handleRemoveCategory(props.row)">
+            <q-btn icon="mdi-delete-outline" color="negative" dense size="sm" @click="handleRemoveAtletas(props.row)">
               <q-tooltip>
                 Deletar
               </q-tooltip>
@@ -35,57 +40,57 @@ import useApi from 'src/composables/UseApi'
 import useNotify from 'src/composables/UseNotify'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
-import { columnsCategory } from './table'
+import { columnsAtletas } from './table'
 export default defineComponent({
   name: 'ListaAtletas',
   setup() {
-    const categories = ref([])
+    const atletas = ref([])
     const loading = ref(true)
     const { list, remove } = useApi()
     const { notifyError, notifySuccess } = useNotify()
     const router = useRouter()
     const $q = useQuasar()
-    const table = 'category'
-    const handleListCategories = async () => {
+    const table = 'atletas'
+    const handleListAtletas = async () => {
       try {
         loading.value = true
-        categories.value = await list(table)
+        atletas.value = await list(table)
         loading.value = false
       } catch (error) {
         notifyError(error.message)
       }
     }
 
-    const handleEdit = (category) => {
-      router.push({ name: 'form-category', params: { id: category.id } })
+    const handleEdit = (atletas) => {
+      router.push({ name: 'form-atletas', params: { id: atletas.id } })
     }
 
-    const handleRemoveCategory = async (category) => {
+    const handleRemoveAtletas = async (atletas) => {
       try {
         $q.dialog({
           title: 'Confirmar',
-          message: `Você tem certeza que deseja deletar ${category.name} ?`,
+          message: `Você tem certeza que deseja deletar ${atletas.name} ?`,
           cancel: true,
           persistent: true
         }).onOk(async () => {
-          await remove(table, category.id)
+          await remove(table, atletas.id)
           notifySuccess('Categoria deletada com sucesso!')
-          handleListCategories()
+          handleListAtletas()
         })
       } catch (error) {
         notifyError(error.message)
       }
     }
     onMounted(() => {
-      handleListCategories()
+      handleListAtletas()
     })
 
     return {
-      columnsCategory,
-      categories,
+      columnsAtletas,
+      atletas,
       loading,
       handleEdit,
-      handleRemoveCategory
+      handleRemoveAtletas
     }
   }
 })

@@ -5,7 +5,7 @@
         <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
 
         <q-toolbar-title>
-          Quasar App
+          Pé Vermelho
         </q-toolbar-title>
         <q-btn-dropdown flat color="white" icon="person">
           <q-list>
@@ -50,10 +50,16 @@ const linksList = [
     routeName: 'me'
   },
   {
-    title: 'Atletas',
+    title: 'Categoria dos Atletas',
     caption: '',
     icon: 'mdi-account',
     routeName: 'category'
+  },
+  {
+    title: 'Cadastro dos Atletas',
+    caption: '',
+    icon: 'mdi-account',
+    routeName: 'atletas'
   }
 ]
 
