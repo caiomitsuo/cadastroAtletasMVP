@@ -49,6 +49,16 @@ const routes = [
         path: 'form-category/:id?',
         name: 'form-category',
         component: () => import('pages/category/FormCategory.vue')
+      },
+      {
+        path: 'atletas',
+        name: 'atletas',
+        component: () => import('pages/atletas/List.vue')
+      },
+      {
+        path: 'form-atletas/:id?',
+        name: 'form-atletas',
+        component: () => import('pages/atletas/FormAtletas.vue')
       }
     ],
     meta: {
