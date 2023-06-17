@@ -8,6 +8,7 @@
           </span>
           <q-space />
           <q-btn color="primary" label="Novo Atleta" icon="mdi-plus" :to="{ name: 'form-atletas' }" />
+          <q-btn color="secondary" icon-right="archive" label="Export to csv" no-caps @click="teste"/>
         </template>
         <template v-slot:body-cell-img_url="props">
           <q-td :props="props">
@@ -42,8 +43,27 @@ import { defineComponent, ref, onMounted } from 'vue'
 import useApi from 'src/composables/UseApi'
 import useNotify from 'src/composables/UseNotify'
 import { useRouter } from 'vue-router'
-import { useQuasar } from 'quasar'
+import { exportFile, useQuasar } from 'quasar'
 import { columnsAtletas } from './table'
+function wrapCsvValue (val, formatFn, row) {
+  let formatted = formatFn !== void 0
+    ? formatFn(val, row)
+    : val
+
+  formatted = formatted === void 0 || formatted === null
+    ? ''
+    : String(formatted)
+
+  formatted = formatted.split('"').join('""')
+  /**
+   * Excel accepts \n and \r in strings, but some other CSV parsers do not
+   * Uncomment the next two lines to escape new lines
+   */
+  // .split('\n').join('\\n')
+  // .split('\r').join('\\r')
+
+  return `"${formatted}"`
+}
 export default defineComponent({
   name: 'ListaAtletas',
   setup() {
@@ -66,6 +86,10 @@ export default defineComponent({
 
     const handleEdit = (atletas) => {
       router.push({ name: 'form-atletas', params: { id: atletas.id } })
+    }
+    const teste = () => {
+      console.log('teste')
+      notifyError('feature em desenvolvimento')
     }
 
     const handleRemoveAtletas = async (atletas) => {
@@ -93,7 +117,33 @@ export default defineComponent({
       atletas,
       loading,
       handleEdit,
-      handleRemoveAtletas
+      teste,
+      handleRemoveAtletas,
+      exportTable () {
+        const content = [columnsAtletas.map(col => wrapCsvValue(col.label))].concat(
+          atletas.value.map(row => columnsAtletas.map(col => wrapCsvValue(
+            typeof col.field === 'function'
+              ? col.field(row)
+              : row[col.field === void 0 ? col.name : col.field],
+            col.format,
+            row
+          )).join(','))
+        ).join('\r\n')
+
+        const status = exportFile(
+          'table-export.csv',
+          content,
+          'text/csv'
+        )
+
+        if (status !== true) {
+          $q.notify({
+            message: 'Browser denied file download...',
+            color: 'negative',
+            icon: 'warning'
+          })
+        }
+      }
     }
   }
 })

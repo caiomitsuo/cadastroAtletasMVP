@@ -18,6 +18,10 @@
           v-model="form.name"
           :rules="[val => (val && val.length > 0) || 'Ops! Parece que falta algo.Nome requerido']"
           />
+          <q-select v-model="form.posicao"
+          :options="options"
+          label="Posição"
+          :rules="[val => (val && val.length > 0) || 'Ops! Parece que falta algo.Nome requerido']" />
           <q-input
             label="Rg"
             v-model="form.rg"
@@ -68,6 +72,7 @@ export default defineComponent({
     const optionsCategory = ref([])
     const form = ref({
       name: '',
+      posicao: '',
       rg: '',
       cpf: '',
       data_nascimento: '',
@@ -75,6 +80,7 @@ export default defineComponent({
       img_url: ''
     })
     const img = ref([])
+    const model = ref([])
 
     onMounted(() => {
       handleGetListCategories()
@@ -118,7 +124,11 @@ export default defineComponent({
       handleSubmit,
       isUpdate,
       optionsCategory,
-      img
+      img,
+      model,
+      options: [
+        'Pilar', 'Hooker', 'Segunda Linha', 'Asa', 'Oitavo', 'Half', 'Abertura', 'Ponta', 'Centro', 'Fullback'
+      ]
     }
   }
 })
