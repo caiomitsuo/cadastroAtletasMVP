@@ -7,18 +7,33 @@
         </p>
       </div>
       <q-form class="col-md-7 col-xs-12 col-sm-12 q-gutter-y-md" @submit.prevent="handleSubmit">
-        <q-input label="Name" v-model="form.name"
+        <q-input
+          label="Name"
+          v-model="form.name"
           :rules="[val => (val && val.length > 0) || 'Ops! Parece que falta algo.Nome requerido']" />
-          <q-input label="Rg" v-model="form.rg"/>
-          <q-input label="Cpf" v-model="form.cpf"/>
-          <q-input v-model="form.data_nascimento" :mask="mask" @input="updateDate" label="Data de Nascimento"/>
+          <q-input
+            label="Rg"
+            v-model="form.rg"
+            :rules="[val => !!val || 'Necessário Preencher o Rg']"
+            />
+          <q-input
+            label="Cpf"
+            v-model="form.cpf"
+            :rules="[val => !!val || 'Necessário Preencher o CPF']"
+            />
+          <q-input
+            v-model="form.data_nascimento"
+            type="date"
+            label="Data de Nascimento"
+            :rules="[val => !!val || 'Necessário Preencher a Data de Nascimento']"
+            />
           <q-select v-model="form.category_id"
-          :options="optionsCategory"
-          label="Categoria"
-          option-value="id"
-          option-label="name"
-          map-options
-          emit-value/>
+            :options="optionsCategory"
+            label="Categoria"
+            option-value="id"
+            option-label="name"
+            map-options
+            emit-value/>
         <q-btn :label="isUpdate ? 'Atualizar' : 'Salvar' " color="primary" class="full-width" rounded type="submit" />
         <q-btn label="Cancelar" color="primary" class="full-width" rounded :to="{ name: 'atletas' }" />
       </q-form>
@@ -90,7 +105,7 @@ export default defineComponent({
       handleSubmit,
       isUpdate,
       optionsCategory,
-      mask: '####/##/##'
+      mask: '##/##/####'
     }
   }
 })

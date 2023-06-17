@@ -109,6 +109,9 @@ module.exports = configure(function (/* ctx */) {
           warning: '#F2C037'
         }
       },
+      screen:{
+        bodyClasses: true
+      },
       plugins: [
         'Dialog',
         'Notify'
