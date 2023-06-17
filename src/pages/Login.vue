@@ -18,6 +18,7 @@
             v-model="form.password"
             lazy-rules
             :rules="[val => (val && val.length > 0) || 'Ops! Parece que falta algo.Senha requerida']"
+            type="password"
           />
           <div class="full-width q-pt-md">
             <q-btn label="Login" color="primary" class="full-width" outlined rounded size="lg" type="submit" />
