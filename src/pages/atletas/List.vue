@@ -11,7 +11,10 @@
         </template>
         <template v-slot:body-cell-img_url="props">
           <q-td :props="props">
-            <q-avatar :src="props.row.img_url" />
+            <q-avatar v-if="props.row.img_url">
+              <img :src="props.row.img_url" />
+            </q-avatar>
+            <q-avatar v-else color="grey" text-color="white" icon="mdi-image-off"/>
           </q-td>
         </template>
         <template v-slot:body-cell-actions="props">
@@ -69,12 +72,12 @@ export default defineComponent({
       try {
         $q.dialog({
           title: 'Confirmar',
-          message: `Você tem certeza que deseja deletar ${atletas.name} ?`,
+          message: `Você tem certeza que deseja excluir ${atletas.name} ?`,
           cancel: true,
           persistent: true
         }).onOk(async () => {
           await remove(table, atletas.id)
-          notifySuccess('Categoria deletada com sucesso!')
+          notifySuccess('Atleta excluido com sucesso!')
           handleListAtletas()
         })
       } catch (error) {

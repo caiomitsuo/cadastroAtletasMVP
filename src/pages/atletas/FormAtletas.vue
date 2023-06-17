@@ -8,9 +8,16 @@
       </div>
       <q-form class="col-md-7 col-xs-12 col-sm-12 q-gutter-y-md" @submit.prevent="handleSubmit">
         <q-input
+          label="Image"
+          type="file"
+          stack-label
+          v-model="img"
+        />
+        <q-input
           label="Name"
           v-model="form.name"
-          :rules="[val => (val && val.length > 0) || 'Ops! Parece que falta algo.Nome requerido']" />
+          :rules="[val => (val && val.length > 0) || 'Ops! Parece que falta algo.Nome requerido']"
+          />
           <q-input
             label="Rg"
             v-model="form.rg"
@@ -25,6 +32,7 @@
             v-model="form.data_nascimento"
             type="date"
             label="Data de Nascimento"
+            stack-label
             :rules="[val => !!val || 'Necessário Preencher a Data de Nascimento']"
             />
           <q-select v-model="form.category_id"
@@ -53,7 +61,7 @@ export default defineComponent({
     const table = 'atletas'
     const router = useRouter()
     const route = useRoute()
-    const { post, getById, update, list } = userApi()
+    const { post, getById, update, list, uploadImg } = userApi()
     const { notifyError, notifySuccess } = useNotify()
     const isUpdate = computed(() => route.params.id)
     let atletas = {}
@@ -66,6 +74,7 @@ export default defineComponent({
       category_id: '',
       img_url: ''
     })
+    const img = ref([])
 
     onMounted(() => {
       handleGetListCategories()
@@ -79,6 +88,10 @@ export default defineComponent({
     }
     const handleSubmit = async () => {
       try {
+        if (img.value.length > 0) {
+          const imgUrl = await uploadImg(img.value[0], 'Atletas')
+          form.value.img_url = imgUrl
+        }
         if (isUpdate.value) {
           await update(table, form.value)
           notifySuccess('Atleta atualizada com sucesso!')
@@ -105,7 +118,7 @@ export default defineComponent({
       handleSubmit,
       isUpdate,
       optionsCategory,
-      mask: '##/##/####'
+      img
     }
   }
 })
