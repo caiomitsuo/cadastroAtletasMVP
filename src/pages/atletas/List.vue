@@ -1,12 +1,17 @@
 <template>
   <q-page padding>
     <div class="row">
-      <q-table title="Atletas" :rows="atletas" :columns="columnsAtletas" row-key="id" class="col-12" :loading="loading">
+      <q-table title="Atletas" :rows="atletas" :columns="columnsAtletas" row-key="id" class="col-12" :loading="loading" :filter="filter">
         <template v-slot:top>
           <span class="text-h6">
             Atletas
           </span>
           <q-space />
+          <q-input outlined dense debounce="300" v-model="filter" placeholder="Pesquisar" class="q-mr-sm">
+            <template v-slot:append>
+              <q-icon name="mdi-magnify" />
+            </template>
+          </q-input>
           <q-btn color="primary" label="Novo Atleta" icon="mdi-plus" :to="{ name: 'form-atletas' }" />
           <q-btn color="secondary" icon-right="archive" label="Export to csv" no-caps @click="teste"/>
         </template>
@@ -41,6 +46,7 @@
 
 import { defineComponent, ref, onMounted } from 'vue'
 import useApi from 'src/composables/UseApi'
+import useAuthUser from 'src/composables/UseAuthUser'
 import useNotify from 'src/composables/UseNotify'
 import { useRouter } from 'vue-router'
 import { exportFile, useQuasar } from 'quasar'
@@ -69,15 +75,17 @@ export default defineComponent({
   setup() {
     const atletas = ref([])
     const loading = ref(true)
-    const { list, remove } = useApi()
+    const filter = ref('')
+    const { listPublic, remove } = useApi()
     const { notifyError, notifySuccess } = useNotify()
+    const { user } = useAuthUser()
     const router = useRouter()
     const $q = useQuasar()
     const table = 'atletas'
     const handleListAtletas = async () => {
       try {
         loading.value = true
-        atletas.value = await list(table)
+        atletas.value = await listPublic(table, user.value.id)
         loading.value = false
       } catch (error) {
         notifyError(error.message)
@@ -116,6 +124,7 @@ export default defineComponent({
       columnsAtletas,
       atletas,
       loading,
+      filter,
       handleEdit,
       teste,
       handleRemoveAtletas,
