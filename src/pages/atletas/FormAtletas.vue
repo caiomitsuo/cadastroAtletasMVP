@@ -19,12 +19,22 @@
           :rules="[val => (val && val.length > 0) || 'Ops! Parece que falta algo.Nome requerido']"
           />
           <q-input
+          label="Apelido"
+          v-model="form.apelido"
+          />
+          <q-select v-model="form.posicao"
+          :options="options"
+          label="Posição"
+          :rules="[val => (val && val.length > 0) || 'Ops! Parece que falta algo.Nome requerido']" />
+          <q-input
             label="Rg"
+            mask="##.###.###-#"
             v-model="form.rg"
             :rules="[val => !!val || 'Necessário Preencher o Rg']"
             />
           <q-input
             label="Cpf"
+            mask="###.###.###-##"
             v-model="form.cpf"
             :rules="[val => !!val || 'Necessário Preencher o CPF']"
             />
@@ -68,6 +78,8 @@ export default defineComponent({
     const optionsCategory = ref([])
     const form = ref({
       name: '',
+      apelido: '',
+      posicao: '',
       rg: '',
       cpf: '',
       data_nascimento: '',
@@ -75,6 +87,7 @@ export default defineComponent({
       img_url: ''
     })
     const img = ref([])
+    const model = ref([])
 
     onMounted(() => {
       handleGetListCategories()
@@ -118,7 +131,11 @@ export default defineComponent({
       handleSubmit,
       isUpdate,
       optionsCategory,
-      img
+      img,
+      model,
+      options: [
+        'Pilar', 'Hooker', 'Segunda Linha', 'Asa', 'Oitavo', 'Half', 'Abertura', 'Ponta', 'Centro', 'Fullback'
+      ]
     }
   }
 })
