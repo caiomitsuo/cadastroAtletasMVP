@@ -60,6 +60,12 @@ const linksList = [
     caption: '',
     icon: 'mdi-account',
     routeName: 'atletas'
+  },
+  {
+    title: 'Convocação Atletas',
+    caption: '',
+    icon: 'mdi-account',
+    routeName: 'atletas-convocacao'
   }
 ]
 

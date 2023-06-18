@@ -56,6 +56,11 @@ const routes = [
         component: () => import('pages/atletas/List.vue')
       },
       {
+        path: 'atletas-convocacao',
+        name: 'atletas-convocacao',
+        component: () => import('pages/atletas/ListConvocao.vue')
+      },
+      {
         path: 'form-atletas/:id?',
         name: 'form-atletas',
         component: () => import('pages/atletas/FormAtletas.vue')

@@ -1,3 +1,15 @@
-body.body--dark {
-    background: #000
-  }
+body {
+    background:#90A4AE
+}
+.q-btn-hoverable:hover {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  /* You can also modify other properties as per your requirement */
+}
+.q-btn .q-focus-helper {
+  display: none;
+}
+
+:global(.q-btn.btn--no-hover .q-focus-helper) {
+  display: none;
+}
