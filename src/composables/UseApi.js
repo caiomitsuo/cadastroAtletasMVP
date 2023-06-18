@@ -21,6 +21,15 @@ export default function userApi() {
     if (error) throw error
     return data
   }
+  const listAtletasConvocacao = async (table, userId) => {
+    const { data, error } = await supabase
+      .from(table)
+      .select('*')
+      .eq('user_id', userId)
+      .eq('situacao', 'Ativo') // Adiciona o filtro para situacao = ativo
+    if (error) throw error
+    return data
+  }
   const getById = async (table, id) => {
     const { data, error } = await supabase
       .from(table)
@@ -92,6 +101,7 @@ export default function userApi() {
     update,
     remove,
     uploadImg,
-    listPublic
+    listPublic,
+    listAtletasConvocacao
   }
 }

@@ -2,8 +2,8 @@
   <q-page padding>
     <p class="text-h6">
       <q-form class="row justify-center" @submit.prevent="handleLogin">
-        <p class="col-12 text-h6 text-center">Login</p>
-        <div class="col-md4 col-sm-6 col-xs-10 q-gutter-y-md">
+        <p class="col-12 text-h5 text-center">Login</p>
+        <div class="col-md4 col-sm-4 col-xs-10 q-gutter-y-m">
           <q-input
             label="Email"
             outlined
@@ -20,15 +20,23 @@
             :rules="[val => (val && val.length > 0) || 'Ops! Parece que falta algo.Senha requerida']"
             type="password"
           />
-          <div class="full-width q-pt-md">
-            <q-btn label="Login" color="primary" class="full-width" outlined rounded size="lg" type="submit" />
-          </div>
-          <div class="full-width q-pt-md">
-            <q-btn label="Cadastro" color="primary" class="full-width" outlined rounded size="lg" to="/register" />
-          </div>
-          <div class="full-width q-pt-md">
-            <q-btn label="Esqueceu a Senha?" color="primary" class="full-width" outlined rounded size="lg"
-              :to="{ name: 'forgot-password' }" />
+          <div class="full-width q-pt-md col-4">
+            <div class="q-pb-md">
+              <q-btn label="Login" color="primary" class="full-width" outlined size="lg" rounded type="submit" />
+            </div>
+            <q-btn
+            label="Cadastro"
+            class="full-width"
+            flat
+            size="md"
+            to="/register"
+             />
+            <q-btn
+            label="Esqueceu a Senha?"
+            class="full-width"
+            flat
+            size="md"
+            :to="{ name: 'forgot-password' }" />
           </div>
         </div>
       </q-form>
@@ -61,8 +69,7 @@ export default defineComponent({
       try {
         await login(form.value)
         notifySuccess('Login realizado com sucesso!')
-        router.push({ name: 'me' })
-        console.log('cliqei')
+        router.push({ name: 'atletas' })
       } catch (error) {
         notifyError(error.message)
       }
@@ -74,3 +81,8 @@ export default defineComponent({
   }
 })
 </script>
+<style>
+.teste{
+  display: flex;
+}
+</style>

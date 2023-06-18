@@ -23,9 +23,13 @@
           v-model="form.apelido"
           />
           <q-select v-model="form.posicao"
-          :options="options"
+          :options="opcoesPosicao"
           label="Posição"
-          :rules="[val => (val && val.length > 0) || 'Ops! Parece que falta algo.Nome requerido']" />
+          :rules="[val => (val && val.length > 0) || 'Ops! Parece que falta algo.Posição requerido']" />
+          <q-select v-model="form.situacao"
+          :options="opcoesSituacao"
+          label="Situação"
+          :rules="[val => (val && val.length > 0) || 'Ops! Parece que falta algo.Situação requerido']" />
           <q-input
             label="Rg"
             mask="##.###.###-#"
@@ -80,6 +84,7 @@ export default defineComponent({
       name: '',
       apelido: '',
       posicao: '',
+      situacao: '',
       rg: '',
       cpf: '',
       data_nascimento: '',
@@ -133,8 +138,11 @@ export default defineComponent({
       optionsCategory,
       img,
       model,
-      options: [
+      opcoesPosicao: [
         'Pilar', 'Hooker', 'Segunda Linha', 'Asa', 'Oitavo', 'Half', 'Abertura', 'Ponta', 'Centro', 'Fullback'
+      ],
+      opcoesSituacao: [
+        'Ativo', 'Lesionado'
       ]
     }
   }
