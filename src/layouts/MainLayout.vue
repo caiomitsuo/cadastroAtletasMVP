@@ -66,6 +66,12 @@ const linksList = [
     caption: '',
     icon: 'mdi-account',
     routeName: 'atletas-convocacao'
+  },
+  {
+    title: 'Convocação Viagem',
+    caption: '',
+    icon: 'mdi-bus',
+    routeName: 'atletas-viagem'
   }
 ]
 
