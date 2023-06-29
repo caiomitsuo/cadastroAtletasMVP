@@ -24,7 +24,6 @@
         <q-item-label header>
           Menu
         </q-item-label>
-
         <EssentialLink v-for="link in essentialLinks" :key="link.title" v-bind="link" />
       </q-list>
     </q-drawer>
@@ -58,14 +57,20 @@ const linksList = [
   {
     title: 'Cadastro dos Atletas',
     caption: '',
-    icon: 'mdi-account',
+    icon: 'mdi-account-plus',
     routeName: 'atletas'
   },
   {
     title: 'Convocação Atletas',
     caption: '',
-    icon: 'mdi-account',
+    icon: 'mdi-account-search',
     routeName: 'atletas-convocacao'
+  },
+  {
+    title: 'Convocação Viagem',
+    caption: '',
+    icon: 'mdi-bus',
+    routeName: 'atletas-viagem'
   }
 ]
 

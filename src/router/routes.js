@@ -61,6 +61,11 @@ const routes = [
         component: () => import('pages/atletas/ListConvocao.vue')
       },
       {
+        path: 'atletas-viagem',
+        name: 'atletas-viagem',
+        component: () => import('pages/atletas/ListViagem.vue')
+      },
+      {
         path: 'form-atletas/:id?',
         name: 'form-atletas',
         component: () => import('pages/atletas/FormAtletas.vue')

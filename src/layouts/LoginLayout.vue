@@ -3,7 +3,7 @@
     <q-header elevated>
       <q-toolbar>
         <q-toolbar-title>
-          Cadastro Atletas MVP
+          Pé Vermelho Rugby
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
