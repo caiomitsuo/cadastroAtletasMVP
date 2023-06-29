@@ -23,7 +23,7 @@
               <q-icon name="mdi-magnify" />
             </template>
           </q-input>
-          <q-btn color="secondary" icon-right="archive" label="Export to csv" no-caps @click="exportTable"/>
+          <q-btn color="secondary" icon-right="archive" label="Gerar Excel" no-caps @click="exportTable"/>
         </template>
         <template v-slot:body-cell-img_url="props">
           <q-td :props="props">
@@ -71,13 +71,6 @@ function wrapCsvValue (val, formatFn, row) {
     : String(formatted)
 
   formatted = formatted.split('"').join('""')
-  /**
-   * Excel accepts \n and \r in strings, but some other CSV parsers do not
-   * Uncomment the next two lines to escape new lines
-   */
-  // .split('\n').join('\\n')
-  // .split('\r').join('\\r')
-
   return `"${formatted}"`
 }
 export default defineComponent({
@@ -134,7 +127,7 @@ export default defineComponent({
         ).join('\r\n')
 
         const status = exportFile(
-          'table-export.csv',
+          'ListaConvocados.csv',
           content,
           'text/csv'
         )
