@@ -8,12 +8,6 @@
       </div>
       <q-form class="col-md-7 col-xs-12 col-sm-12 q-gutter-y-md" @submit.prevent="handleSubmit">
         <q-input
-          label="Image"
-          type="file"
-          stack-label
-          v-model="img"
-        />
-        <q-input
           label="Name"
           v-model="form.name"
           :rules="[val => (val && val.length > 0) || 'Ops! Parece que falta algo.Nome requerido']"
@@ -22,10 +16,22 @@
           label="Apelido"
           v-model="form.apelido"
           />
+          <q-input
+          label="email"
+          v-model="form.email"
+          />
+          <q-input
+          label="Cidade"
+          v-model="form.cidade"
+          />
           <q-select v-model="form.posicao"
           :options="opcoesPosicao"
           label="Posição"
           :rules="[val => (val && val.length > 0) || 'Ops! Parece que falta algo.Posição requerido']" />
+          <q-select v-model="form.posicao_secundaria"
+          :options="opcoesPosicaoSecundaria"
+          label="Posição Secundária"
+          />
           <q-select v-model="form.situacao"
           :options="opcoesSituacao"
           label="Situação"
@@ -84,12 +90,13 @@ export default defineComponent({
       name: '',
       apelido: '',
       posicao: '',
+      posicao_secundaria: '',
       situacao: '',
       rg: '',
       cpf: '',
       data_nascimento: '',
       category_id: '',
-      img_url: ''
+      email: ''
     })
     const img = ref([])
     const model = ref([])
@@ -141,8 +148,11 @@ export default defineComponent({
       opcoesPosicao: [
         'Pilar', 'Hooker', 'Segunda Linha', 'Asa', 'Oitavo', 'Half', 'Abertura', 'Ponta', 'Centro', 'Fullback'
       ],
+      opcoesPosicaoSecundaria: [
+        'Pilar', 'Hooker', 'Segunda Linha', 'Asa', 'Oitavo', 'Half', 'Abertura', 'Ponta', 'Centro', 'Fullback'
+      ],
       opcoesSituacao: [
-        'Ativo', 'Lesionado'
+        'Ativo', 'Lesionado', 'Inativo'
       ]
     }
   }
