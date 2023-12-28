@@ -49,6 +49,7 @@
             :rules="[val => !!val || 'Necessário Preencher o CPF']"
             />
           <q-input
+          
             v-model="form.data_nascimento"
             type="date"
             label="Data de Nascimento"
